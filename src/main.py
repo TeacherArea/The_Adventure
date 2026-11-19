@@ -3,6 +3,8 @@ import flet as ft
 
 def main(page: ft.Page):
     counter = ft.Text("0", size=50, data=0)
+    page.title = "The Adventure";
+    page.bgcolor = ft.Colors.AMBER
 
     def increment_click(e: ft.Event[ft.FloatingActionButton]):
         counter.data += 1
@@ -12,13 +14,8 @@ def main(page: ft.Page):
         icon=ft.Icons.ADD, key="increment", on_click=increment_click
     )
     page.add(
-        ft.SafeArea(
-            expand=True,
-            content=ft.Container(
-                content=counter,
-                alignment=ft.Alignment.CENTER,
-            ),
-        )
+        ft.Text("This is the story", ft.Colors.WHITE),
+        ft.Text("And this is another story")
     )
 
 
