@@ -1,22 +1,38 @@
 import flet as ft
 
+from character import create_player
+from story import village_intro, shop_intro, clear_screen
+from shop import buy_weapon
+from scenes.village import village_scene
+from scenes.shop import shop_scene
+from scenes.wood import wood_scene
+from scenes.bridge import bridge_scene
+from scenes.ruin import ruin_scene
 
 def main(page: ft.Page):
-    counter = ft.Text("0", size=50, data=0)
-    page.title = "The Adventure";
-    page.bgcolor = ft.Colors.AMBER
+    player = create_player(name = "Pelle")
+    page.padding = 0
+    page.spacing = 0
+    page.horizontal_alignment = ft.CrossAxisAlignment.STRETCH
 
-    def increment_click(e: ft.Event[ft.FloatingActionButton]):
-        counter.data += 1
-        counter.value = str(counter.data)
+    def change_scene(scene):
+        page.clean()
+        page.title = "The Adventure";
 
-    page.floating_action_button = ft.FloatingActionButton(
-        icon=ft.Icons.ADD, key="increment", on_click=increment_click
-    )
-    page.add(
-        ft.Text("This is the story", ft.Colors.WHITE),
-        ft.Text("And this is another story")
-    )
+        if(scene == "village"):
+            page.add(village_scene(player, change_scene))
+        elif(scene == "bridge"):
+            page.add(bridge_scene(player, change_scene))
+        elif(scene == "shop"):
+            page.add(shop_scene(player, change_scene))
+        elif(scene == "wood"):
+            page.add(wood_scene(player, change_scene))
+        elif(scene == "ruin"):
+            page.add(ruin_scene(player, change_scene))
+
+        page.update()
+
+    change_scene("village")
 
 
 if __name__ == "__main__":
